@@ -29,3 +29,8 @@ To run locally for development on osx:
   - start the app
 
     foreman start
+
+Testing:
+
+    python highlight_tests.py
+

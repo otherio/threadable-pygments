@@ -32,6 +32,7 @@ class FlaskrTestCase(unittest.TestCase):
             'stripped-html': ''
         })
         output = json.loads(rv.data)
+        assert rv.content_type == 'application/json'
         assert output['body-html'] == '<pre>print "Hello World"</pre>'
 
     def test_format_diff(self):

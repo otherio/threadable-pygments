@@ -15,11 +15,13 @@ To run locally for development on osx:
   - install pip and virtualenv
 
     `sudo easy_install pip`
+
     `sudo pip install virtualenv`
 
   - set up a virtual enviroment
 
     `virtualenv venv --distribute`
+
     `source venv/bin/activate`
 
   - install dependencies

@@ -25,7 +25,7 @@ def highlight_post(lexer):
         abort(404)
 
     post = request.form.copy()
-    if post['body-html']:
+    if 'body-html' in post and post['body-html']:
         return json.dumps(post)
 
     highlighted_code = highlight(post['body-plain'], lexer_map[lexer](), HtmlFormatter())

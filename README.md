@@ -14,21 +14,21 @@ To run locally for development on osx:
 
   - install pip and virtualenv
 
-    sudo easy_install pip
-    sudo pip install virtualenv
+    `sudo easy_install pip`
+    `sudo pip install virtualenv`
 
   - set up a virtual enviroment
 
-    virtualenv venv --distribute
-    source venv/bin/activate
+    `virtualenv venv --distribute`
+    `source venv/bin/activate`
 
   - install dependencies
 
-    pip install -r requirements.txt
+    `pip install -r requirements.txt`
 
   - start the app
 
-    foreman start
+    `foreman start`
 
 Testing:
 

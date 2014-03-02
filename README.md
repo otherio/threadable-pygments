@@ -10,6 +10,12 @@ To run your own instance for highlighting code with Threadable, install the Hero
     heroku create
     git push heroku master
 
+Note the application URL, and set that as your Threadable group's webhook URL. You'll need to specify the
+lexer you'd like to use for your code. Currently, this code supports python and diff. Specify it by appending
+it to your URL like so:
+
+    https://ephemeral-narwhal-1234.herokuapp.com/python
+
 To run locally for development on osx:
 
   - install pip and virtualenv

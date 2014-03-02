@@ -1,4 +1,3 @@
-import os
 import highlight
 import unittest
 import json

@@ -25,13 +25,17 @@ def highlight_post(lexer):
         abort(404)
 
     post = request.form.copy()
-    if post['body_html']:
+    if post['body-html'] or post['stripped-html']:
         return json.dumps(post)
 
-    code = post['body_plain']
-    highlighted_code = highlight(code, lexer_map[lexer](), HtmlFormatter())
+    highlighted_code = highlight(post['body-plain'], lexer_map[lexer](), HtmlFormatter())
     highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
-    post['body_html'] = transform(highlighted_code)
+    post['body-html'] = transform(highlighted_code)
+
+    highlighted_code = highlight(post['stripped-text'], lexer_map[lexer](), HtmlFormatter())
+    highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
+    post['stripped-html'] = transform(highlighted_code)
+
     return json.dumps(post)
 
 @app.route('/', methods=['GET'])

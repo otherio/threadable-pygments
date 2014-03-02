@@ -1,6 +1,5 @@
 from flask import Flask
-from flask import request
-from flask import abort
+from flask import request, abort, jsonify
 import json
 
 # use the pygments library for code highlighting
@@ -23,9 +22,13 @@ def highlight_post(lexer):
     if not lexer in lexer_map:
         abort(404)
 
-    post = request.form.copy()
+    post = {}
+    for key in ['body-plain', 'stripped-text', 'body-html', 'stripped-html']:
+        if key in request.form:
+            post[key] = request.form[key]
+
     if 'body-html' in post and post['body-html']:
-        return json.dumps(post)
+        return jsonify(post)
 
     highlighted_code = highlight(post['body-plain'], lexer_map[lexer](), HtmlFormatter())
     highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
@@ -35,9 +38,7 @@ def highlight_post(lexer):
     highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
     post['stripped-html'] = transform(highlighted_code)
 
-    print json.dumps(post)
-
-    return json.dumps(post)
+    return jsonify(post)
 
 @app.route('/', methods=['GET'])
 def info():

@@ -1,5 +1,8 @@
 import os
 from flask import Flask
+from flask import request
+from flask import abort
+import json
 
 # use the pygments library for code highlighting
 from pygments import highlight
@@ -11,9 +14,26 @@ from premailer import transform
 
 app = Flask(__name__)
 
-@app.route('/')
-def highlight_post():
-    code = 'print "Hello World"'
-    highlighted_code = highlight(code, PythonLexer(), HtmlFormatter())
+lexer_map = {
+    'python': PythonLexer,
+    'diff': DiffLexer
+}
+
+@app.route('/<lexer>', methods=['POST'])
+def highlight_post(lexer):
+    if not lexer in lexer_map:
+        abort(404)
+
+    post = request.form.copy()
+    if post['body_html']:
+        return json.dumps(post)
+
+    code = post['body_plain']
+    highlighted_code = highlight(code, lexer_map[lexer](), HtmlFormatter())
     highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
-    return transform(highlighted_code)
+    post['body_html'] = transform(highlighted_code)
+    return json.dumps(post)
+
+@app.route('/', methods=['GET'])
+def info():
+    return 'Syntax highlighting webhook processor for Threadable! See: https://github.com/otherio/threadable-pygments'

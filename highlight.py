@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask import request
 from flask import abort
@@ -35,6 +34,8 @@ def highlight_post(lexer):
     highlighted_code = highlight(post['stripped-text'], lexer_map[lexer](), HtmlFormatter())
     highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
     post['stripped-html'] = transform(highlighted_code)
+
+    print json.dumps(post)
 
     return json.dumps(post)
 

@@ -19,6 +19,7 @@ class FlaskrTestCase(unittest.TestCase):
             'stripped-text': 'print "Hello Stripped World"',
             'stripped-html': ''
         })
+        print rv.data
         output = json.loads(rv.data)
         assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre><span style=\"color:#008000; font-weight:bold\">print</span> <span style=\"color:#BA2121\">\"Hello World\"</span>\n</pre></div></body>\n</html>\n"
         assert output['stripped-html'] == "<html>\n<head></head>\n<body><div><pre><span style=\"color:#008000; font-weight:bold\">print</span> <span style=\"color:#BA2121\">\"Hello Stripped World\"</span>\n</pre></div></body>\n</html>\n"

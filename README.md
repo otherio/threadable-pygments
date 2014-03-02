@@ -16,6 +16,8 @@ it to your URL like so:
 
     https://ephemeral-narwhal-1234.herokuapp.com/python
 
+Don't forget to use https!
+
 To run locally for development on osx:
 
   - install pip and virtualenv
@@ -42,3 +44,6 @@ Testing:
 
     python highlight_tests.py
 
+I bet this could be waaaay cooler. Pull requests gladly accepted!
+
+Author: Ian Baker <ian@other.io>

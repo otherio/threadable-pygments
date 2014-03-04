@@ -20,8 +20,8 @@ class FlaskrTestCase(unittest.TestCase):
         })
         output = json.loads(rv.data)
         assert rv.content_type == 'application/json'
-        assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre><span style=\"color:#008000; font-weight:bold\">print</span> <span style=\"color:#BA2121\">\"Hello World\"</span>\n</pre></div></body>\n</html>\n"
-        assert output['stripped-html'] == "<html>\n<head></head>\n<body><div><pre><span style=\"color:#008000; font-weight:bold\">print</span> <span style=\"color:#BA2121\">\"Hello Stripped World\"</span>\n</pre></div></body>\n</html>\n"
+        assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\"><span style=\"color:#008000; font-weight:bold\">print</span> <span style=\"color:#BA2121\">\"Hello World\"</span>\n</pre></div></body>\n</html>\n"
+        assert output['stripped-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\"><span style=\"color:#008000; font-weight:bold\">print</span> <span style=\"color:#BA2121\">\"Hello Stripped World\"</span>\n</pre></div></body>\n</html>\n"
 
     def test_skip_formatting_with_html_part(self):
         rv = self.app.post('/python', data={
@@ -42,7 +42,7 @@ class FlaskrTestCase(unittest.TestCase):
             'stripped-html': ''
         })
         output = json.loads(rv.data)
-        assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre>1c1\n&lt; Hello\n<span style=\"color:#A00000\">---</span>\n\n&gt; There\n</pre></div></body>\n</html>\n"
+        assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\">1c1\n&lt; Hello\n<span style=\"color:#A00000\">---</span>\n\n&gt; There\n</pre></div></body>\n</html>\n"
 
     def test_format_missing(self):
         rv = self.app.post('/notreal', data={

@@ -15,6 +15,8 @@ lexer_map = {
     'diff': DiffLexer
 }
 
+additional_styles = 'pre {font-size: 12px;}'
+
 @app.route('/<lexer>', methods=['POST'])
 def highlight_post(lexer):
     if not lexer in lexer_map:
@@ -40,5 +42,5 @@ def info():
 
 def highlight_with_lexer(code, lexer):
     highlighted_code = highlight(code, lexer(), HtmlFormatter())
-    highlighted_code = "<style>{0}</style>\n{1}".format(HtmlFormatter().get_style_defs(), highlighted_code)
+    highlighted_code = "<style>{0}{1}</style>\n{2}".format(HtmlFormatter().get_style_defs(), additional_styles, highlighted_code)
     return transform(highlighted_code)

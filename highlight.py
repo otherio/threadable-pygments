@@ -8,7 +8,15 @@ from pygments.formatters import HtmlFormatter
 # use premailer to inline the styles from pygments for email client compatibility
 from premailer import transform
 
+# get a logger since we're running on heroku, and want logs to go to stdout
+import logging
+
 app = Flask(__name__)
+app.config['PROPAGATE_EXCEPTIONS'] = True
+
+stream_handler = logging.StreamHandler()
+app.logger.addHandler(stream_handler)
+app.logger.setLevel(logging.INFO)
 
 lexer_map = {
     'python': PythonLexer,

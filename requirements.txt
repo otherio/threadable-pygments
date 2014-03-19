@@ -7,3 +7,4 @@ itsdangerous==0.23
 wsgiref==0.1.2
 Pygments
 premailer
+chardet

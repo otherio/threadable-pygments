@@ -55,6 +55,7 @@ def info():
 
 
 def highlight_with_lexer(code, lexer):
-    highlighted_code = highlight(code, lexer(), HtmlFormatter())
-    highlighted_code = "<style>{0}{1}</style>\n{2}".format(HtmlFormatter().get_style_defs(), additional_styles, highlighted_code)
-    return transform(highlighted_code)
+    formatter = HtmlFormatter(encoding='utf-8')
+    highlighted_code = highlight(code, lexer(encoding='chardet'), formatter)
+    highlighted_code = "<style>{0}{1}</style>\n{2}".format(formatter.get_style_defs(), additional_styles, highlighted_code)
+    return transform(highlighted_code.decode('utf-8'))

@@ -47,6 +47,17 @@ class FlaskrTestCase(unittest.TestCase):
         output = json.loads(rv.data)
         assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\">1c1\n&lt; Hello\n<span style=\"color:#A00000\">---</span>\n\n&gt; There\n</pre></div></body>\n</html>\n"
 
+    def test_format_diff_with_unicode(self):
+        rv = self.app.post('/diff', data={
+            'body-plain': u"1c1\n< Hello\n---\n\n> There\xa9\n",
+            'body-html': '',
+            'stripped-text': '',
+            'stripped-html': '',
+            'Message-Id': 'amessageidgoeshere'
+        })
+        output = json.loads(rv.data)
+        assert output['body-html'] == u"<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\">1c1\n&lt; Hello\n<span style=\"color:#A00000\">---</span>\n\n&gt; There&#169;\n</pre></div></body>\n</html>\n"
+
     def test_format_missing(self):
         rv = self.app.post('/notreal', data={
             'body-plain': 'print "Hello World"',

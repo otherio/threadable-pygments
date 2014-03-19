@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, abort, jsonify
 
 # use the pygments library for code highlighting
@@ -13,6 +14,9 @@ import logging
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
+
+if os.environ['DEBUG'] == 'true':
+    app.config['DEBUG'] = True
 
 logging.getLogger().addHandler(logging.StreamHandler())
 

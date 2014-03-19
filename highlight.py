@@ -15,7 +15,7 @@ import logging
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-if os.environ['DEBUG'] == 'true':
+if os.environ.get('DEBUG') == 'true':
     app.config['DEBUG'] = True
 
 logging.getLogger().addHandler(logging.StreamHandler())

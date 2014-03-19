@@ -16,7 +16,8 @@ class FlaskrTestCase(unittest.TestCase):
             'body-plain': 'print "Hello World"',
             'body-html': '',
             'stripped-text': 'print "Hello Stripped World"',
-            'stripped-html': ''
+            'stripped-html': '',
+            'Message-Id': 'amessageidgoeshere'
         })
         output = json.loads(rv.data)
         assert rv.content_type == 'application/json'
@@ -28,7 +29,8 @@ class FlaskrTestCase(unittest.TestCase):
             'body-plain': 'print "Hello World"',
             'body-html': '<pre>print "Hello World"</pre>',
             'stripped-text': '',
-            'stripped-html': ''
+            'stripped-html': '',
+            'Message-Id': 'amessageidgoeshere'
         })
         output = json.loads(rv.data)
         assert rv.content_type == 'application/json'
@@ -39,7 +41,8 @@ class FlaskrTestCase(unittest.TestCase):
             'body-plain': "1c1\n< Hello\n---\n\n> There\n",
             'body-html': '',
             'stripped-text': '',
-            'stripped-html': ''
+            'stripped-html': '',
+            'Message-Id': 'amessageidgoeshere'
         })
         output = json.loads(rv.data)
         assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\">1c1\n&lt; Hello\n<span style=\"color:#A00000\">---</span>\n\n&gt; There\n</pre></div></body>\n</html>\n"
@@ -49,7 +52,8 @@ class FlaskrTestCase(unittest.TestCase):
             'body-plain': 'print "Hello World"',
             'body-html': '',
             'stripped-text': '',
-            'stripped-html': ''
+            'stripped-html': '',
+            'Message-Id': 'amessageidgoeshere'
         })
         assert rv.status == '404 NOT FOUND'
 

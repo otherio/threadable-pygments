@@ -14,9 +14,7 @@ import logging
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-stream_handler = logging.StreamHandler()
-app.logger.addHandler(stream_handler)
-app.logger.setLevel(logging.INFO)
+logging.getLogger().addHandler(logging.StreamHandler())
 
 lexer_map = {
     'python': PythonLexer,
@@ -30,12 +28,16 @@ def highlight_post(lexer):
     if not lexer in lexer_map:
         abort(404)
 
+    message_id = request.form['Message-Id']
+    app.logger.info("processing message {0} as {1}".format(message_id, lexer))
+
     post = {}
     for key in ['body-plain', 'stripped-text', 'body-html', 'stripped-html']:
         if key in request.form:
             post[key] = request.form[key]
 
     if 'body-html' in post and post['body-html']:
+        app.logger.info("{0} has an html part. skipping.".format(message_id))
         return jsonify(post)
 
     post['body-html'] = highlight_with_lexer(post['body-plain'], lexer_map[lexer])

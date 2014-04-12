@@ -47,6 +47,17 @@ class FlaskrTestCase(unittest.TestCase):
         output = json.loads(rv.data)
         assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\">1c1\n&lt; Hello\n<span style=\"color:#A00000\">---</span>\n\n&gt; There\n</pre></div></body>\n</html>\n"
 
+    def test_format_diff_with_long_line(self):
+        rv = self.app.post('/diff', data={
+            'body-plain': "1c1\n< Breathe in your fears. Face them. To conquer fear, you must become fear. You must bask in the fear of other men. And men fear most what they cannot see. You have to become a terrible thought. A wraith. You have to become an idea! Feel terror cloud your senses. Feel its power to distort. To control. And know that this power can be yours. Embrace your worst fear. Become one with the darkness.\n---\n\n> There\n",
+            'body-html': '',
+            'stripped-text': '',
+            'stripped-html': '',
+            'Message-Id': 'amessageidgoeshere'
+        })
+        output = json.loads(rv.data)
+        assert output['body-html'] == "<html>\n<head></head>\n<body><div><pre style=\"font-size:12px\">1c1\n&lt; Breathe in your fears. Face them. To conquer fear, you must become fear. You must bask in the fear of other men. And men fear most what they cannot see. You have to become a terrible thought. A wraith. You have to become an idea! Feel terror cloud your senses. Feel its power to distort. To control. And know that this power can be yours. Embrace your worst fear. Become one with the darkness.\n<span style=\"color:#A00000\">---</span>\n\n&gt; There\n</pre></div></body>\n</html>\n"
+
     def test_format_diff_with_unicode(self):
         rv = self.app.post('/diff', data={
             'body-plain': u"1c1\n< Hello\n---\n\n> There\xa9\n",
